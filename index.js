@@ -3,6 +3,11 @@ const app = express();
 
 // ✅ All channels organized by category
 const categories = {
+  "FIFA":[
+    {
+      https://jmp2.uk/stvp-IN270000230
+    }
+  ]
   "NEPALI": [
     {
       "id": 224,
