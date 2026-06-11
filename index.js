@@ -7,7 +7,7 @@ const categories = {
   "FIFA":[
     {
       "name": "worldcup",
-     https://c822c659.wurl.com/manifest/f36d25e7e52f1ba8d7e56eb859c636563214f541/U2Ftc3VuZy1pbl9GSUZBUGx1c0VuZ2xpc2hfSExT/6fc23070-4f02-430f-92b7-1aa6d71e8c4d/2.m3u8
+    "url": " https://c822c659.wurl.com/manifest/f36d25e7e52f1ba8d7e56eb859c636563214f541/U2Ftc3VuZy1pbl9GSUZBUGx1c0VuZ2xpc2hfSExT/6fc23070-4f02-430f-92b7-1aa6d71e8c4d/2.m3u8"
     }
   ]
   "NEPALI": [
