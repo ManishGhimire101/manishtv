@@ -825,6 +825,7 @@ const movieLinks = [
 app.get("/getplaylist", async (req, res) => {
   let playlist = "#EXTM3U\n";
   let sports = "https://raw.githubusercontent.com/doms9/iptv/refs/heads/default/M3U8/base.m3u8"
+   res.send(sports);
 
   for (const [group, items] of Object.entries(categories)) {
     for (const ch of items) {
@@ -841,7 +842,7 @@ app.get("/getplaylist", async (req, res) => {
 
   res.setHeader("Content-Type", "audio/x-mpegurl");
   res.send(playlist);
-  res.send(sports);
+  
 });
 
 // ✅ Route: Fetch signed link and redirect
