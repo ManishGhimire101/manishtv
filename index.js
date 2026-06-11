@@ -824,8 +824,8 @@ const movieLinks = [
 // ✅ Route: Generate playlist dynamically with category grouping
 app.get("/getplaylist", async (req, res) => {
   let playlist = "#EXTM3U\n";
-  let sports = "https://raw.githubusercontent.com/doms9/iptv/refs/heads/default/M3U8/base.m3u8"
-   res.send(sports);
+  let sports= "https://iptv-org.github.io/iptv/categories/sports.m3u";
+ conslole.log(sports);
 
   for (const [group, items] of Object.entries(categories)) {
     for (const ch of items) {
