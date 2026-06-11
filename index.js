@@ -4,12 +4,7 @@ const app = express();
 // ✅ All channels organized by category
 const categories = {
   
-  "FIFA":[
-    {
-      "name": "worldcup",
-    "url": " https://c822c659.wurl.com/manifest/f36d25e7e52f1ba8d7e56eb859c636563214f541/U2Ftc3VuZy1pbl9GSUZBUGx1c0VuZ2xpc2hfSExT/6fc23070-4f02-430f-92b7-1aa6d71e8c4d/2.m3u8"
-    }
-  ],
+
   "NEPALI": [
     {
       "id": 224,
@@ -829,6 +824,7 @@ const movieLinks = [
 // ✅ Route: Generate playlist dynamically with category grouping
 app.get("/getplaylist", async (req, res) => {
   let playlist = "#EXTM3U\n";
+  let sports = "https://raw.githubusercontent.com/doms9/iptv/refs/heads/default/M3U8/base.m3u8"
 
   for (const [group, items] of Object.entries(categories)) {
     for (const ch of items) {
@@ -841,9 +837,11 @@ app.get("/getplaylist", async (req, res) => {
     playlist += `#EXTINF:-1 group-title="Movies" tvg-logo="${m.logo || ""}", ${m.name}\n`;
     playlist += `${m.url}\n\n`;
   }
+  
 
   res.setHeader("Content-Type", "audio/x-mpegurl");
   res.send(playlist);
+  res.send(sports);
 });
 
 // ✅ Route: Fetch signed link and redirect
