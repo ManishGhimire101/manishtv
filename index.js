@@ -840,21 +840,7 @@ app.get("/getplaylist", async (req, res) => {
   
 
  
-    try {
-    const sportsM3u = await fetch(
-      "https://iptv-org.github.io/iptv/categories/sports.m3u"
-    ).then(r => r.text());
-
-    playlist += "\n# IPTV-ORG SPORTS\n";
-    playlist += sportsM3u.replace("#EXTM3U", "");
-  } catch (err) {
-    console.error("Sports playlist error:", err);
-  }
-
-  res.setHeader("Content-Type", "audio/x-mpegurl");
-  res.send(playlist);
-  
-});
+  );
 
 // ✅ Route: Fetch signed link and redirect
 app.get("/channel/:id.m3u8", async (req, res) => {
