@@ -1748,21 +1748,101 @@ const movieLinks = [
     url: "http://ftp.ctgfun.com/Indian/Hindi%20Movies/Tantra%20%282024%29%20Hindi%20720p%20WEBRip%20x264%20ESub%20%5BDDN%5D/Tantra%20%282024%29%20Hindi%20720p%20WEBRip%20x264%20ESub%20%5BDDN%5D.mp4",
     logo: "https://manishghimire.info.np/images/my2.webp",
   },
-   {
+  {
     name: "The Buckingham Murders",
     url: "http://ftp.ctgfun.com/Indian/Hindi%20Movies/The%20Buckingham%20Murders%20%282024%29%20Hindi%20720p%20WEBRip%20x264%20ESub%20%5BDDN%5D/The%20Buckingham%20Murders%20%282024%29%20Hindi%20720p%20WEBRip%20x264%20ESub%20%5BDDN%5D.mp4",
     logo: "https://manishghimire.info.np/images/my2.webp",
   },
- 
 ];
 
-// ✅ Route: Generate playlist dynamically with category grouping
+const typeMatchers = [
+  {
+    type: "News",
+    patterns: ["news", "times", "today", "prime", "business", "global"],
+  },
+  {
+    type: "Sports",
+    patterns: ["sport", "arena", "npl", "ten 1"],
+  },
+  {
+    type: "Movies",
+    patterns: ["cinema", "movie", "filmy", "action", "max", "premium"],
+  },
+  {
+    type: "Kids",
+    patterns: ["kids", "cartoon", "toon", "nick", "pogo", "hungama", "disney"],
+  },
+  {
+    type: "Music",
+    patterns: ["music", "hits", "mtv"],
+  },
+  {
+    type: "Religious",
+    patterns: [
+      "bhakti",
+      "darshan",
+      "satsang",
+      "aastha",
+      "sanskar",
+      "peace",
+      "madani",
+      "god tv",
+      "tbn",
+      "angel",
+      "dharma",
+      "omkar",
+      "qtv",
+    ],
+  },
+  {
+    type: "Education",
+    patterns: ["education", "school", "krishi", "kisan"],
+  },
+  {
+    type: "Lifestyle",
+    patterns: ["health", "travel", "food", "wellness", "care", "luxe"],
+  },
+];
+
+function classifyChannelType(channelName = "") {
+  const normalizedName = channelName.toLowerCase();
+
+  for (const matcher of typeMatchers) {
+    if (matcher.patterns.some((pattern) => normalizedName.includes(pattern))) {
+      return matcher.type;
+    }
+  }
+
+  return "General";
+}
+
+function buildChannelsByType(channelGroups) {
+  const channelsByType = {};
+
+  for (const items of Object.values(channelGroups)) {
+    for (const channel of items) {
+      const type = classifyChannelType(channel.name);
+      if (!channelsByType[type]) {
+        channelsByType[type] = [];
+      }
+      channelsByType[type].push(channel);
+    }
+  }
+
+  return channelsByType;
+}
+
+app.get("/channels/by-type", (req, res) => {
+  res.json(buildChannelsByType(categories));
+});
+
 app.get("/getplaylist", async (req, res) => {
   let playlist = "#EXTM3U\n";
+  const channelsByType = buildChannelsByType(categories);
 
-  for (const [group, items] of Object.entries(categories)) {
+  for (const [group, items] of Object.entries(channelsByType)) {
     for (const ch of items) {
-      playlist += `#EXTINF:-1 tvg-id="${ch.id}" tvg-logo="${ch.imgSrc || ""}" group-title="${group}", ${ch.name}\n`;
+      playlist += `#EXTINF:-1 tvg-id="${ch.id}" tvg-logo="${ch.img || ""}" group-title="${group}", ${ch.name}\n`;
       playlist += `http://${req.headers.host}/channel/${ch.id}.m3u8\n\n`;
     }
   }
